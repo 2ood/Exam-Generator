@@ -1,2 +1,2 @@
 # problemShooter
-problemshooter designed for corpral SeongHwan Cho 
+problemshooter designed for corpral Cho 

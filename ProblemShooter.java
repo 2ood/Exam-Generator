@@ -4,58 +4,71 @@ import java.io.*;
 public class ProblemShooter {
     public static void main (String [] args) {
         
-        String fileName="";
         ArrayList <Problem> problems;
-        int [] indexes;
+        ArrayList <IterateIndex> indexes;
         final int NUMBER=40;
         boolean [] turnIn;
         int score;
-        fileName="chapters.txt";
-        indexes=chooseSmallIndex(NUMBER);
         
+        indexes=chooseSmallIndex(NUMBER);
         //problems = readEachProblem(indexes);
         //turnIn = exam(problems);
         //score = evaluate(turnIn);
-        
         //System.out.println("The Score is : "+score);
         
+        /*//test for choosing random smallindexes.
+        int flag =0;
+        for(IterateIndex i : indexes) {
+                System.out.println((flag++)+" ) "+i.toString());
+            }
+        */
         
     }
     public static String[] readFile(String filename) throws Exception {
         String[] temp = new String [100];
         
-            Scanner scan = new Scanner(new File("chapters.txt"));
+            Scanner scan = new Scanner(new File(filename));
             int flag=0;
              while(scan.hasNextLine()){
                  temp[flag++] = scan.nextLine();
              }
-        System.out.println("flag : "+flag);
+        // System.out.println("flag : "+flag);
         String [] result = new String[flag];
         for(int i=0; i<result.length;i++) result[i]=temp[i];
         
         return result;
     }
     
-    public static int[] chooseSmallIndex(int count) { 
-        int[] result;
-        int [] chapterNums = new int [40];
-        String []  chapters;
-
+    public static ArrayList<IterateIndex> chooseSmallIndex(int count) { 
+        ArrayList<IterateIndex> result = new ArrayList<IterateIndex>(count);
+        ArrayList<IterateIndex> smalls = new ArrayList<IterateIndex>();
+        String [] chapters;
+        int indexNum=0;
+        
         try { 
             chapters = readFile("chapters.txt"); 
-            //for(int i=0; i<chapters.length;i++) System.out.println("chapters["+i+"] : "+chapters[i]);
-            result = new int[count];
-                for(int i=0; i<result.length; i++) {
-                    //System.out.println(chapterNums[i]);
-                    result[i]= (int)(Math.random()*chapterNums[i]+1);    
+            for(int i=0;i<chapters.length;i++) {
+                int jay = Integer.parseInt(chapters[i]);
+                indexNum+=jay;
+                for(int j=0; j<jay;j++) {
+                    smalls.add(new IterateIndex(i,j));
                 }
+            }
+            
+            for(Integer n : chooseNumbers(indexNum,count)) {
+                     result.add(smalls.get(n.intValue()));
+                    //System.out.println(n.intValue());
+                }
+            
         
         }  
         catch (FileNotFoundException e) {
             System.out.println("File Not Found");
-            result = new int[]{-1,-1,-1,-1};
+            result = new ArrayList<IterateIndex>();
         }
-        catch (Exception e1) {e1.printStackTrace(); result = new int[]{-1,-1,-1,-1};}
+        catch (Exception e1) {e1.printStackTrace(); result = new ArrayList<IterateIndex>();}
+        
+        Collections.sort(result);
         return result;
     }
     
@@ -73,12 +86,15 @@ public class ProblemShooter {
     }
     
     
-    public static ArrayList<Problem> readEachProblem(int[] indexes) {
+    public static ArrayList<Problem> readEachProblem(ArrayList <IterateIndex> chosen) {
         ArrayList<Problem> result= new ArrayList<Problem>();
         Problem newProb;
+        Iteration newIterate;
+        int num=1;
         
-        for (int i=0;i<40;i++) {
-            newProb = new Problem();
+        for (IterateIndex i : chosen) {
+            newIterate = new Iteration(i,(int)(Math.random()*num)+1);
+            newProb = new Problem(i);
             result.add(newProb);
         }
         

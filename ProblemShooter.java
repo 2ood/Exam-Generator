@@ -70,7 +70,6 @@ public class ProblemShooter {
                 }
             }
             
-            
             for(Integer n : chooseNumbers(indexNum,count)) {
                      result.add(smalls.get(n.intValue()));
                     //System.out.println(n.intValue());
@@ -98,7 +97,7 @@ public class ProblemShooter {
         int temp;
         
         while(flag<count) {
-            temp = new Integer((int)(Math.random()*(range+1));
+            temp = new Integer((int)(Math.random()*range));
             if(result.contains(temp)) ;
             else { result.add(temp); flag++;}
             

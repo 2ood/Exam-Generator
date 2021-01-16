@@ -1,33 +1,21 @@
 public class Problem {
     //attributes
     private String right;
-    private String[] wrong;
-    private Iteration iterate;
+    private AttayList<String> wrong;
     
     //constructors
-    protected Problem() {this("",new String[]{"","","",""},-1,-1,-1);}
-    public Problem(String r, String[] w, int b, int s, int p){
+    public Problem() {this("",new ArrayList<String>());}
+    public Problem(String r, AraryList<String> w){
         right       = r;
         wrong       = w;
-        iterate     = new Iteration(b,s,p);
-    }
-    public Problem(String r, String[] w, Iteration itr){
-        right       = r;
-        wrong       = w;
-        iterate     = itr;
     }
     
-    public Problem(Iteration itr){
-        this("",new String[]{"","","",""},itr);
-        right = readRight(itr);
-        wrong = readWrong(itr);
-    }
-    public String readRight(Iteration itr) {
+    public String readRight() {
         String r="";
         return r;
     }
     
-    public String[] readWrong(Iteration itr) {
+    public String[] readWrong() {
         /*
         FileInputStream bank = new FileInputStream("bank.txt");
             Set<Word> wordTree = new TreeSet<Word>();
@@ -46,13 +34,10 @@ public class Problem {
     }
     //getters
     public String getRight() { return right;}
-    public String[] getWrong() { return wrong;}
-    public Iteration getItr() { return iterate;}
-    
+    public String[] getWrong() { return wrong;}    
     //setters
     public boolean setRight(String r) { right=r; return true;}
     public boolean setWrong(String[] w) { wrong = w; return true;}
-    public boolean setItr(Iteration i){ iterate =i; return true;}
     
     public String toString() { 
         String result="";

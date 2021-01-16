@@ -2,6 +2,8 @@ import java.util.*;
 import java.io.*;
 
 public class ProblemShooter {
+    public static Utility util = new Utility();
+    
     public static void main (String [] args) {
         
         ArrayList <Problem> problems;
@@ -24,6 +26,7 @@ public class ProblemShooter {
         */
         
     }
+    /*
     public static String[] readFile(String filename) throws Exception {
         String[] temp = new String [100];
         
@@ -38,20 +41,26 @@ public class ProblemShooter {
         
         return result;
     }
+    */
     
     public static ArrayList<IterateIndex> chooseSmallIndex(int count) { 
         ArrayList<IterateIndex> result = new ArrayList<IterateIndex>(count);
         ArrayList<IterateIndex> smalls = new ArrayList<IterateIndex>();
-        String [] chapters;
+        ArrayList<String> chapters;
         int indexNum=0;
         
         try { 
-            chapters = readFile("chapters.txt"); 
-            for(int i=0;i<chapters.length;i++) {
-                int jay = Integer.parseInt(chapters[i]);
-                indexNum+=jay;
-                for(int j=0; j<jay;j++) {
-                    smalls.add(new IterateIndex(i,j));
+            chapters = util.readFile("chapters.txt"); 
+            for(int i=0;i<chapters.size();i++) {
+                String[] temp = chapters.get(i).split(",");
+                int [] jay = new int[temp.length];
+                for(int k=0;k<jay.length;k++) {
+                    jay[k]=Integer.parseInt(temp[k]);
+                }
+                indexNum+=temp.length;
+                
+                for(int j=0; j<jay.length;j++) {
+                    smalls.add(new IterateIndex(i,j,jay[j]));
                 }
             }
             
@@ -59,14 +68,16 @@ public class ProblemShooter {
                      result.add(smalls.get(n.intValue()));
                     //System.out.println(n.intValue());
                 }
-            
         
         }  
         catch (FileNotFoundException e) {
             System.out.println("File Not Found");
             result = new ArrayList<IterateIndex>();
         }
-        catch (Exception e1) {e1.printStackTrace(); result = new ArrayList<IterateIndex>();}
+        catch (Exception e1) {
+            e1.printStackTrace(); 
+            result = new ArrayList<IterateIndex>();
+        }
         
         Collections.sort(result);
         return result;
@@ -88,14 +99,9 @@ public class ProblemShooter {
     
     public static ArrayList<Problem> readEachProblem(ArrayList <IterateIndex> chosen) {
         ArrayList<Problem> result= new ArrayList<Problem>();
-        Problem newProb;
-        Iteration newIterate;
-        int num=1;
         
         for (IterateIndex i : chosen) {
-            newIterate = new Iteration(i,(int)(Math.random()*num)+1);
-            newProb = new Problem(i);
-            result.add(newProb);
+            result.add(i.loadAnyProblem());
         }
         
         return result;

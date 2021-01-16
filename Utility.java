@@ -1,3 +1,6 @@
+import java.util.*;
+import java.io.*;
+
 public class Utility {
     public Utility() {}
     
@@ -5,7 +8,7 @@ public class Utility {
             ArrayList<String> result = new ArrayList<String>();
             Scanner scan = new Scanner(new File(filename));
              while(scan.hasNextLine()){
-                 temp.add(scan.nextLine());
+                 result.add(scan.nextLine());
              }
         
         return result;

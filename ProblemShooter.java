@@ -8,12 +8,17 @@ public class ProblemShooter {
         
         ArrayList <Problem> problems;
         ArrayList <IterateIndex> indexes;
-        final int NUMBER=40;
+        final int NUMBER=10;
         boolean [] turnIn;
         int score;
         
         indexes=chooseSmallIndex(NUMBER);
-        //problems = readEachProblem(indexes);
+        problems = readEachProblem(indexes);
+        
+        int flag =0;
+        for(Problem p : problems) {
+            System.out.println((flag++)+")"+p.toString());
+        }
         //turnIn = exam(problems);
         //score = evaluate(turnIn);
         //System.out.println("The Score is : "+score);
@@ -54,20 +59,24 @@ public class ProblemShooter {
             for(int i=0;i<chapters.size();i++) {
                 String[] temp = chapters.get(i).split(",");
                 int [] jay = new int[temp.length];
+                
                 for(int k=0;k<jay.length;k++) {
                     jay[k]=Integer.parseInt(temp[k]);
                 }
                 indexNum+=temp.length;
                 
                 for(int j=0; j<jay.length;j++) {
-                    smalls.add(new IterateIndex(i,j,jay[j]));
+                    smalls.add(new IterateIndex(i,j));
                 }
             }
+            
             
             for(Integer n : chooseNumbers(indexNum,count)) {
                      result.add(smalls.get(n.intValue()));
                     //System.out.println(n.intValue());
+                
                 }
+            
         
         }  
         catch (FileNotFoundException e) {
@@ -87,10 +96,12 @@ public class ProblemShooter {
         ArrayList<Integer> result = new ArrayList<Integer>(count);
         int flag =0;
         int temp;
+        
         while(flag<count) {
-            temp = new Integer((int)(Math.random()*range +1));
+            temp = new Integer((int)(Math.random()*(range+1));
             if(result.contains(temp)) ;
             else { result.add(temp); flag++;}
+            
         }
         
         return result;

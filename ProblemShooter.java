@@ -3,31 +3,32 @@ import java.io.*;
 
 public class ProblemShooter {
     public static Utility util = new Utility();
+    static int number=10;
     
     public static void main (String [] args) {
         
         ArrayList <Problem> problems;
         ArrayList <IterateIndex> indexes;
-        final int NUMBER=10;
         boolean [] turnIn;
         int score;
         
-        indexes=chooseSmallIndex(NUMBER);
+        indexes=chooseSmallIndex(number);
         problems = readEachProblem(indexes);
-        
-        int flag =0;
-        for(Problem p : problems) {
-            System.out.println((flag++)+")"+p.toString());
-        }
-        //turnIn = exam(problems);
-        //score = evaluate(turnIn);
-        //System.out.println("The Score is : "+score);
+        turnIn = exam(problems);
+        score = evaluate(turnIn);
+        System.out.println("The Score is : "+score);
         
         /*//test for choosing random smallindexes.
         int flag =0;
         for(IterateIndex i : indexes) {
                 System.out.println((flag++)+" ) "+i.toString());
             }
+        */
+        /*// test for loading problem contents.
+        int flag =0;
+        for(Problem p : problems) {
+            System.out.println((flag++)+")"+p.toString());
+        }
         */
         
     }
@@ -118,12 +119,42 @@ public class ProblemShooter {
     }
     
     public static boolean[] exam(ArrayList<Problem> problems) {
-        boolean[] result = {true,true};
+        boolean[] result = new boolean[problems.size()];
+        int flag=0;
+        for(Problem p : problems) {
+            result[flag]=exam(flag++, p);
+            System.out.println("*********************");
+        }
         return result;
     }
     
+    public static boolean exam(int flag, Problem p) {
+        Scanner sc = new Scanner(System.in);
+        int r = (int)(Math.random()*5);
+        int f=0;
+        String [] outof = p.getOutOf(r);
+        //System.out.println(p);
+        System.out.println((flag+1)+"."+p.getPassage());
+        
+        
+        for(int i=0; i<outof.length;i++) {
+            System.out.println("("+(i+1)+") "+outof[i]);
+        }
+        
+        System.out.print("Your answer : ");
+        if(sc.nextInt()==r+1)  {System.out.println("right!"); return true; }
+        else {System.out.println("Wrong!"); return false; }
+    }
+    
     public static int evaluate(boolean[] turnIn) {
-        int result = 0;
+        int count = 0;
+        int result;
+        for(int i=0;i<turnIn.length;i++) {
+            if(turnIn[i]) count++;
+        }
+        result = (int)((float)(count)/turnIn.length*100);
+        System.out.println("Got "+count+" right out of "+turnIn.length+" problems.");
+        
         return result;
     }
 }

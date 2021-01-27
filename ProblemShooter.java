@@ -1,5 +1,7 @@
 import java.util.*;
 import java.io.*;
+import java.time.*;
+import java.time.format.*;
 
 public class ProblemShooter {
     public static Utility util = new Utility();
@@ -9,14 +11,16 @@ public class ProblemShooter {
         
         ArrayList <Problem> problems;
         ArrayList <IterateIndex> indexes;
+        
         boolean [] turnIn;
         int score;
         
         indexes=chooseSmallIndex(number);
         problems = readEachProblem(indexes);
-        turnIn = exam(problems);
-        score = evaluate(turnIn);
-        System.out.println("The Score is : "+score);
+        printToTxt(problems);
+        //turnIn = exam(problems);
+        //score = evaluate(turnIn);
+        //System.out.println("The Score is : "+score);
         
         /*//test for choosing random smallindexes.
         int flag =0;
@@ -107,6 +111,29 @@ public class ProblemShooter {
         return result;
     }
     
+    public static void printToTxt(ArrayList <Problem> problems) {
+         try {
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MMddHHmm");  
+            LocalDateTime now = LocalDateTime.now(); 
+            File file = new File("exam"+dtf.format(now)+".txt");
+            FileWriter fw = new FileWriter(file);
+            int i=1;
+            for(Problem p : problems) {
+                fw.write(i+". ");
+                fw.write(shootProb(p));
+                fw.write("\n\n");
+                fw.flush();
+                i++;
+            }  
+            
+            fw.close();
+             
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+         }
+    }
     
     public static ArrayList<Problem> readEachProblem(ArrayList <IterateIndex> chosen) {
         ArrayList<Problem> result= new ArrayList<Problem>();
@@ -146,6 +173,19 @@ public class ProblemShooter {
         else {System.out.println("Wrong!"); return false; }
     }
     
+    public static String shootProb(Problem p) {
+        String result="";
+        int r = (int)(Math.random()*5);
+        String [] outof = p.getOutOf(r);
+        //System.out.println(p);
+        result+=(p.getPassage()+"\n");
+        
+        for(int i=0; i<outof.length;i++) {
+            result+="("+(i+1)+") "+outof[i]+"\n";
+        }
+        
+        return result;
+    }
     public static int evaluate(boolean[] turnIn) {
         int count = 0;
         int result;

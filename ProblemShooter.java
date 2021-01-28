@@ -17,7 +17,6 @@ public class ProblemShooter {
         turnIn = exam(problems);
         score = evaluate(turnIn);
         System.out.println("The Score is : "+score);
-        
         /*//test for choosing random smallindexes.
         int flag =0;
         for(IterateIndex i : indexes) {

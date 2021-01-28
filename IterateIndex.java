@@ -27,7 +27,7 @@ public class IterateIndex implements Comparable<IterateIndex> {
     */
     
     public Problem loadProblem (int index) {
-        String filename ="../sample"+bigIndex+"/"+bigIndex+"-"+smallIndex+".csv";
+        String filename ="sample"+bigIndex+"/"+bigIndex+"-"+smallIndex+".csv";
         Problem result;
         ArrayList<String> wrong = new ArrayList<String>();
         
@@ -54,7 +54,7 @@ public class IterateIndex implements Comparable<IterateIndex> {
     }
     
     public Problem loadAnyProblem() {
-        String filename ="../sample/"+(bigIndex+1)+"/"+(bigIndex+1)+"-"+(smallIndex+1)+".csv";
+        String filename ="sample/"+(bigIndex+1)+"/"+(bigIndex+1)+"-"+(smallIndex+1)+".csv";
         Problem result;
         ArrayList<String> wrong = new ArrayList<String>();
         

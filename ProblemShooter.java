@@ -6,6 +6,7 @@ import java.time.format.*;
 public class ProblemShooter {
     public static Utility util = new Utility();
     static int number=10;
+    static ArrayList<Integer> ans=new ArrayList<Integer>(number);
     
     public static void main (String [] args) {
         
@@ -18,6 +19,7 @@ public class ProblemShooter {
         indexes=chooseSmallIndex(number);
         problems = readEachProblem(indexes);
         printToTxt(problems);
+        printAnsTxt();
         //turnIn = exam(problems);
         //score = evaluate(turnIn);
         //System.out.println("The Score is : "+score);
@@ -115,13 +117,35 @@ public class ProblemShooter {
          try {
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MMddHHmm");  
             LocalDateTime now = LocalDateTime.now(); 
-            File file = new File("exam"+dtf.format(now)+".txt");
+            File file = new File(dtf.format(now)+"exam.txt");
             FileWriter fw = new FileWriter(file);
             int i=1;
             for(Problem p : problems) {
                 fw.write(i+". ");
                 fw.write(shootProb(p));
                 fw.write("\n\n");
+                fw.flush();
+                i++;
+            }  
+            
+            fw.close();
+             
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+         }
+    }
+    
+    public static void printAnsTxt() {
+         try {
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MMddHHmm");  
+            LocalDateTime now = LocalDateTime.now(); 
+            File file = new File(dtf.format(now)+"answer.txt");
+            FileWriter fw = new FileWriter(file);
+            int i=1;
+            for(Integer a : ans) {
+                fw.write(i+") "+a.intValue()+"\n");
                 fw.flush();
                 i++;
             }  
@@ -158,7 +182,7 @@ public class ProblemShooter {
     public static boolean exam(int flag, Problem p) {
         Scanner sc = new Scanner(System.in);
         int r = (int)(Math.random()*5);
-        int f=0;
+        
         String [] outof = p.getOutOf(r);
         //System.out.println(p);
         System.out.println((flag+1)+"."+p.getPassage());
@@ -169,13 +193,14 @@ public class ProblemShooter {
         }
         
         System.out.print("Your answer : ");
-        if(sc.nextInt()==r+1)  {System.out.println("right!"); return true; }
-        else {System.out.println("Wrong!"); return false; }
+        if(sc.nextInt()==r+1)  {System.out.println("right!"); sc.close();return true; }
+        else {System.out.println("Wrong!"); sc.close(); return false; }
     }
     
     public static String shootProb(Problem p) {
         String result="";
         int r = (int)(Math.random()*5);
+        ans.add(new Integer(r+1));
         String [] outof = p.getOutOf(r);
         //System.out.println(p);
         result+=(p.getPassage()+"\n");

@@ -1,0 +1,2 @@
+Main-Class: ProblemShooter
+Class-Path: .

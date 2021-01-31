@@ -1,4 +1,4 @@
-package project1;
+package question_bank;
 
 import java.util.*;
 import java.io.*;
@@ -12,7 +12,17 @@ public class Utility {
              while(scan.hasNextLine()){
                  result.add(scan.nextLine());
              }
-        
+        result.trimToSize();
+        return result;
+    }
+    
+    public ArrayList<String> readFile(File f) throws Exception {
+            ArrayList<String> result = new ArrayList<String>();
+            Scanner scan = new Scanner(f);
+             while(scan.hasNextLine()){
+                 result.add(scan.nextLine());
+             }
+        result.trimToSize();
         return result;
     }
 }

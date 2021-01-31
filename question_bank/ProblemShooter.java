@@ -1,4 +1,4 @@
-package project1;
+package question_bank;
 
 import java.util.*;
 import java.io.*;
@@ -17,11 +17,31 @@ public class ProblemShooter {
         
         boolean [] turnIn;
         int score;
+
+        System.out.print("refreshing chapter file ...");
+        refreshChapters();
+        System.out.println("done");
         
+        
+        System.out.print("choosing Indexes ...");
         indexes=chooseSmallIndex(number);
+        System.out.println("done");
+        
+        
+        System.out.print("reading each problems ...");
         problems = readEachProblem(indexes);
+        System.out.println("done");
+        
+        
+        System.out.print("exporting exam sheet ...");
         printToTxt(problems);
+        System.out.println("done");
+        
+        
+        System.out.print("exporting answer sheet ...");
         printAnsTxt();
+        System.out.println("All done");
+        
         //turnIn = exam(problems);
         //score = evaluate(turnIn);
         //System.out.println("The Score is : "+score);
@@ -57,6 +77,43 @@ public class ProblemShooter {
     }
     */
     
+    public static void refreshChapters() {
+        ArrayList<String> files; 
+        try {
+            File dir = new File("question_bank/PUT_YOUR_QUESTION_FILES_HERE");
+            File ch = new File("chapters_DO_NOT_ERASE.txt");
+            FileWriter fw = new FileWriter(ch);
+            
+            if(dir.isDirectory()) {
+            String[] subDir = dir.list(new FilenameFilter() {
+              @Override
+              public boolean accept(File current, String name) {
+                return new File(current, name).isDirectory();
+              }
+            });
+                
+                
+            for(int i=0;i<subDir.length;i++) {
+                File[] fileList =(new File("question_bank/PUT_YOUR_QUESTION_FILES_HERE/"+(i+1))).listFiles();
+                for(int j=0;j<fileList.length;j++) {
+                    files = util.readFile(new File("question_bank/PUT_YOUR_QUESTION_FILES_HERE/"+(i+1)+"/"+(i+1)+"-"+(j+1)+".csv"));
+                    fw.write(""+files.size());
+                    if(j+1<fileList.length) fw.write(",");
+                    fw.flush();
+                }
+                 if(i+1<subDir.length) fw.write("\n");
+                fw.flush();
+            }
+                }
+          fw.close();   
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+         }
+        
+    }
+    
     public static ArrayList<IterateIndex> chooseSmallIndex(int count) { 
         ArrayList<IterateIndex> result = new ArrayList<IterateIndex>(count);
         ArrayList<IterateIndex> smalls = new ArrayList<IterateIndex>();
@@ -64,7 +121,7 @@ public class ProblemShooter {
         int indexNum=0;
         
         try { 
-            chapters = util.readFile("chapters.txt"); 
+            chapters = util.readFile("chapters_DO_NOT_ERASE.txt"); 
             for(int i=0;i<chapters.size();i++) {
                 String[] temp = chapters.get(i).split(",");
                 int [] jay = new int[temp.length];

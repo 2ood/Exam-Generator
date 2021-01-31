@@ -1,4 +1,4 @@
-package project1;
+package question_bank;
 
 import java.io.FileNotFoundException;
 import java.util.*;
@@ -29,7 +29,7 @@ public class IterateIndex implements Comparable<IterateIndex> {
     */
     
     public Problem loadProblem (int index) {
-        String filename ="sample"+bigIndex+"/"+bigIndex+"-"+smallIndex+".csv";
+        String filename ="question_bank/PUT_YOUR_QUESTION_FILES_HERE/"+bigIndex+"/"+bigIndex+"-"+smallIndex+".csv";
         Problem result;
         ArrayList<String> wrong = new ArrayList<String>();
         
@@ -56,7 +56,7 @@ public class IterateIndex implements Comparable<IterateIndex> {
     }
     
     public Problem loadAnyProblem() {
-        String filename ="sample/"+(bigIndex+1)+"/"+(bigIndex+1)+"-"+(smallIndex+1)+".csv";
+        String filename ="question_bank/PUT_YOUR_QUESTION_FILES_HERE/"+(bigIndex+1)+"/"+(bigIndex+1)+"-"+(smallIndex+1)+".csv";
         Problem result;
         ArrayList<String> wrong = new ArrayList<String>();
         

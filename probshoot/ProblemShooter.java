@@ -1,4 +1,9 @@
-package question_bank;
+package probshoot;
+
+/**
+* main class(Entry-Point) for project problemshooter.
+* @author Kyungmin Choi <kmchoi28@naver.com>
+**/
 
 import java.util.*;
 import java.io.*;
@@ -14,9 +19,6 @@ public class ProblemShooter {
         
         ArrayList <Problem> problems;
         ArrayList <IterateIndex> indexes;
-        
-        boolean [] turnIn;
-        int score;
 
         System.out.print("refreshing chapter file ...");
         refreshChapters();
@@ -80,7 +82,7 @@ public class ProblemShooter {
     public static void refreshChapters() {
         ArrayList<String> files; 
         try {
-            File dir = new File("question_bank/PUT_YOUR_QUESTION_FILES_HERE");
+            File dir = new File("PUT_YOUR_QUESTION_FILES_HERE");
             File ch = new File("chapters_DO_NOT_ERASE.txt");
             FileWriter fw = new FileWriter(ch);
             
@@ -94,9 +96,9 @@ public class ProblemShooter {
                 
                 
             for(int i=0;i<subDir.length;i++) {
-                File[] fileList =(new File("question_bank/PUT_YOUR_QUESTION_FILES_HERE/"+(i+1))).listFiles();
+                File[] fileList =(new File("PUT_YOUR_QUESTION_FILES_HERE/"+(i+1))).listFiles();
                 for(int j=0;j<fileList.length;j++) {
-                    files = util.readFile(new File("question_bank/PUT_YOUR_QUESTION_FILES_HERE/"+(i+1)+"/"+(i+1)+"-"+(j+1)+".csv"));
+                    files = util.readFile(new File("UT_YOUR_QUESTION_FILES_HERE/"+(i+1)+"/"+(i+1)+"-"+(j+1)+".csv"));
                     fw.write(""+files.size());
                     if(j+1<fileList.length) fw.write(",");
                     fw.flush();
@@ -270,6 +272,7 @@ public class ProblemShooter {
         
         return result;
     }
+    
     public static int evaluate(boolean[] turnIn) {
         int count = 0;
         int result;

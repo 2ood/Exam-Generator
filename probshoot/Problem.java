@@ -1,4 +1,11 @@
-package question_bank;
+package probshoot;
+
+
+/**
+* supportive class for project problemshooter.
+* This class is an object model of handling each problem.
+* @author Kyungmin Choi <kmchoi28@naver.com>
+**/
 
 import java.util.*;
 

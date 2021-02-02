@@ -12,14 +12,19 @@ import java.time.format.*;
 
 public class ProblemShooter {
     public static Utility util = new Utility();
-    static int number=10;
+    static int number;
     static ArrayList<Integer> ans=new ArrayList<Integer>(number);
+    static File dir;
     
     public static void main (String [] args) {
         
         ArrayList <Problem> problems;
         ArrayList <IterateIndex> indexes;
-
+        
+        System.out.print("reading configuration ...");
+        readConfig();
+        System.out.println("done");
+        
         System.out.print("refreshing chapter file ...");
         refreshChapters();
         System.out.println("done");
@@ -79,10 +84,17 @@ public class ProblemShooter {
     }
     */
     
-    public static void refreshChapters() {
-        ArrayList<String> files; 
+    public static void readConfig() {
         try {
-            File dir = new File("PUT_YOUR_QUESTION_FILES_HERE");
+            dir= new File("PUT_YOUR_QUESTION_FILES_HERE");
+            number=10;
+        } catch(Exception e) {}
+        
+    }
+    
+    public static void refreshChapters() {
+        int files; 
+        try {
             File ch = new File("chapters_DO_NOT_ERASE.txt");
             FileWriter fw = new FileWriter(ch);
             
@@ -98,8 +110,8 @@ public class ProblemShooter {
             for(int i=0;i<subDir.length;i++) {
                 File[] fileList =(new File("PUT_YOUR_QUESTION_FILES_HERE/"+(i+1))).listFiles();
                 for(int j=0;j<fileList.length;j++) {
-                    files = util.readFile(new File("UT_YOUR_QUESTION_FILES_HERE/"+(i+1)+"/"+(i+1)+"-"+(j+1)+".csv"));
-                    fw.write(""+files.size());
+                    files = util.overlookFile(new File("PUT_YOUR_QUESTION_FILES_HERE/"+(i+1)+"/"+(i+1)+"-"+(j+1)+".csv"));
+                    fw.write(""+files);
                     if(j+1<fileList.length) fw.write(",");
                     fw.flush();
                 }

@@ -1,6 +1,6 @@
 # this path is where the root of certain question bank is located.
 # this path is a relative path, the root directory is where the jar file is placed.
-Bank-Root: question_bank/PUT_YOUR_QUESTION_FILES_HERE
+Bank-Root: PUT_YOUR_QUESTION_FILES_HERE
 
 # this is the number of questions to be picked.
 # WARNING! the number must be bigger than the number of small indexes.

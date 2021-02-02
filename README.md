@@ -27,7 +27,7 @@ This is how you can change your question banks whenever needed.
 The path of the directory is stated in the **config.txt** file.
 
 
-## 2. question bank
+## 2. Needs to be filled beforehand : update question bank
 As described, this directory (hereafter referred to as root bank) is where you put your information of your qustion pool.
 
 This program is designed for two-level-indexed problems.
@@ -40,7 +40,21 @@ In the root bank, there are subdirectories representing each big indexes.
 
 Inside each big index subdirectories, there are .csv files for each small indexes. The files should be only .csv files (or .txt file split with commas[,]). 
 
+**WARNING**
 
+* the files should only be **.scv files**.
+* the file name should be of following syntax; 
+* **[bigindex]-[smallindex].csv**    ex) 1-3.csv
+
+In each .csv files, the information of each problem is stored. There are 7 columns; problem number, problem question passage, the answer, and 4 different wrong choices.
+
+These files should be manually put.
+
+## 3. Let's generate exam sheet
+By now, you'ill have 3 things in your root directory; question bank, config file, and the generateExams.jar file.
+
+All you need to do is, double-click file generateExams.jar. 
+If the bank is classified properly and if the config is plausible, two(or three) files should be made. One is the exam sheet, and the other is its answer sheet(One optional is chapters_DO_NOT_ERASE.txt file. This is a supportive file that shortens program running time.) 
 
 
 

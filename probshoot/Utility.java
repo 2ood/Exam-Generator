@@ -32,4 +32,15 @@ public class Utility {
         result.trimToSize();
         return result;
     }
+    
+    public int overlookFile(File f) throws Exception {
+            int result=0;
+            Scanner scan = new Scanner(f);
+             while(scan.hasNextLine()){
+                 result++;
+                 scan.nextLine();
+             }
+        scan.close();
+        return result;
+    }
 }

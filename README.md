@@ -53,7 +53,7 @@ These files should be manually put.
 ## 3. Let's generate exam sheet
 By now, you'ill have 3 things in your root directory; question bank, config file, and the generateExams.jar file.
 
-All you need to do is, double-click file generateExams.jar. 
+All you need to do is, **double-click file generateExams.jar**. 
 If the bank is classified properly and if the config is plausible, two(or three) files should be made. One is the exam sheet, and the other is its answer sheet(One optional is chapters_DO_NOT_ERASE.txt file. This is a supportive file that shortens program running time.) 
 
 

@@ -2,6 +2,11 @@
 # this path is a relative path, the root directory is where the jar file is placed.
 Bank-Root: PUT_YOUR_QUESTION_FILES_HERE
 
+# This attribute designates whether the program should read all over the bank files.
+# If there's no change in bank since last run, putting this attribute to N
+# shortens running time.
+Skim-Bank: Y
+
 # this is the number of questions to be picked.
 # WARNING! the number must be bigger than the number of small indexes.
 How-Many-Questions: 10

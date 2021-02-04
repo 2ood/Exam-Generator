@@ -15,6 +15,7 @@ public class ProblemShooter {
     static int number;
     static ArrayList<Integer> ans=new ArrayList<Integer>(number);
     static File dir;
+    static String bankPath;
     
     public static void main (String [] args) {
         
@@ -86,7 +87,7 @@ public class ProblemShooter {
     
     public static void readConfig() {
         try {
-            dir= new File("PUT_YOUR_QUESTION_FILES_HERE");
+            bankPath="PUT_YOUR_QUESTION_FILES_HERE";
             number=10;
         } catch(Exception e) {}
         
@@ -95,6 +96,7 @@ public class ProblemShooter {
     public static void refreshChapters() {
         int files; 
         try {
+            File dir= new File(bankPath);
             File ch = new File("chapters_DO_NOT_ERASE.txt");
             FileWriter fw = new FileWriter(ch);
             

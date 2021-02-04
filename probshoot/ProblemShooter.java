@@ -13,9 +13,10 @@ import java.time.format.*;
 public class ProblemShooter {
     public static Utility util = new Utility();
     static int number;
-    static ArrayList<Integer> ans=new ArrayList<Integer>(number);
+    static int[] ans;
     static File dir;
     static String bankPath;
+    static int [][] chapters;
     
     public static void main (String [] args) {
         
@@ -30,14 +31,22 @@ public class ProblemShooter {
         refreshChapters();
         System.out.println("done");
         
-        
-        System.out.print("choosing Indexes ...");
-        indexes=chooseSmallIndex(number);
-        System.out.println("done");
-        
+        try {
+            System.out.print("choosing Indexes ...");
+            indexes=chooseSmallIndex(number);
+            System.out.println("done");
+        } catch (Exception e) {
+            System.out.println("so little bank");
+            System.out.println("Exiting program ...");
+            return;
+        }
         
         System.out.print("reading each problems ...");
         problems = readEachProblem(indexes);
+        System.out.println("done");
+        
+        System.out.print("shuffling problems ...");
+        Collections.shuffle(problems);
         System.out.println("done");
         
         
@@ -89,39 +98,37 @@ public class ProblemShooter {
         try {
             bankPath="PUT_YOUR_QUESTION_FILES_HERE";
             number=10;
+            ans = new int[number];
         } catch(Exception e) {}
         
     }
     
     public static void refreshChapters() {
-        int files; 
         try {
             File dir= new File(bankPath);
-            File ch = new File("chapters_DO_NOT_ERASE.txt");
-            FileWriter fw = new FileWriter(ch);
             
             if(dir.isDirectory()) {
-            String[] subDir = dir.list(new FilenameFilter() {
-              @Override
-              public boolean accept(File current, String name) {
-                return new File(current, name).isDirectory();
-              }
-            });
-                
-                
-            for(int i=0;i<subDir.length;i++) {
-                File[] fileList =(new File("PUT_YOUR_QUESTION_FILES_HERE/"+(i+1))).listFiles();
-                for(int j=0;j<fileList.length;j++) {
-                    files = util.overlookFile(new File("PUT_YOUR_QUESTION_FILES_HERE/"+(i+1)+"/"+(i+1)+"-"+(j+1)+".csv"));
-                    fw.write(""+files);
-                    if(j+1<fileList.length) fw.write(",");
-                    fw.flush();
+                String[] subDir = dir.list(new FilenameFilter() {
+                  @Override
+                  public boolean accept(File current, String name) {
+                    return new File(current, name).isDirectory();
+                  }
+                });
+
+                Arrays.sort(subDir);
+
+                chapters = new int[subDir.length][];
+                for(int i=0;i<subDir.length;i++) {
+                    File[] fileList =(new File(bankPath+"/"+subDir[i])).listFiles();
+                    Arrays.sort(fileList);
+                    
+                    chapters[i]=new int[fileList.length];
+                    for(int j=0;j<fileList.length;j++) {
+                        chapters[i][j] = util.overlookFile(fileList[j]);
+                    }
                 }
-                 if(i+1<subDir.length) fw.write("\n");
-                fw.flush();
             }
-                }
-          fw.close();   
+            
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (Exception e) {
@@ -130,44 +137,25 @@ public class ProblemShooter {
         
     }
     
-    public static ArrayList<IterateIndex> chooseSmallIndex(int count) { 
+    public static ArrayList<IterateIndex> chooseSmallIndex(int count) throws Exception { 
         ArrayList<IterateIndex> result = new ArrayList<IterateIndex>(count);
         ArrayList<IterateIndex> smalls = new ArrayList<IterateIndex>();
-        ArrayList<String> chapters;
         int indexNum=0;
         
-        try { 
-            chapters = util.readFile("chapters_DO_NOT_ERASE.txt"); 
-            for(int i=0;i<chapters.size();i++) {
-                String[] temp = chapters.get(i).split(",");
-                int [] jay = new int[temp.length];
-                
-                for(int k=0;k<jay.length;k++) {
-                    jay[k]=Integer.parseInt(temp[k]);
-                }
+            for(int i=0;i<chapters.length;i++) {
+                int [] temp = chapters[i];
                 indexNum+=temp.length;
                 
-                for(int j=0; j<jay.length;j++) {
+                for(int j=0; j<temp.length;j++) {
                     smalls.add(new IterateIndex(i,j));
                 }
             }
-            
+            if(indexNum>=count) {
             for(Integer n : chooseNumbers(indexNum,count)) {
-                     result.add(smalls.get(n.intValue()));
-                    //System.out.println(n.intValue());
-                
+                     result.add(smalls.get(n.intValue()));            
                 }
-            
-        
-        }  
-        catch (FileNotFoundException e) {
-            System.out.println("File Not Found");
-            result = new ArrayList<IterateIndex>();
-        }
-        catch (Exception e1) {
-            e1.printStackTrace(); 
-            result = new ArrayList<IterateIndex>();
-        }
+            }
+            else throw new Exception();
         
         Collections.sort(result);
         return result;
@@ -180,7 +168,7 @@ public class ProblemShooter {
         
         while(flag<count) {
             temp = new Integer((int)(Math.random()*range));
-            if(result.contains(temp)) ;
+            if(result.contains(temp));
             else { result.add(temp); flag++;}
             
         }
@@ -197,7 +185,7 @@ public class ProblemShooter {
             int i=1;
             for(Problem p : problems) {
                 fw.write(i+". ");
-                fw.write(shootProb(p));
+                fw.write(shootProb(p,i-1));
                 fw.write("\n\n");
                 fw.flush();
                 i++;
@@ -219,8 +207,8 @@ public class ProblemShooter {
             File file = new File(dtf.format(now)+"answer.txt");
             FileWriter fw = new FileWriter(file);
             int i=1;
-            for(Integer a : ans) {
-                fw.write(i+") "+a.intValue()+"\n");
+            for(int a : ans) {
+                fw.write(i+") "+a+"\n");
                 fw.flush();
                 i++;
             }  
@@ -244,7 +232,24 @@ public class ProblemShooter {
         return result;
     }
     
-    public static boolean[] exam(ArrayList<Problem> problems) {
+   
+    
+    public static String shootProb(Problem p, int j) {
+        String result="";
+        int r = (int)(Math.random()*5);
+        ans[j]=(r+1);
+        String [] outof = p.getOutOf(r);
+        //System.out.println(p);
+        result+=(p.getPassage()+"\n");
+        
+        for(int i=0; i<outof.length;i++) {
+            result+="("+(i+1)+") "+outof[i]+"\n";
+        }
+        
+        return result;
+    }
+    /*
+     public static boolean[] exam(ArrayList<Problem> problems) {
         boolean[] result = new boolean[problems.size()];
         int flag=0;
         for(Problem p : problems) {
@@ -272,21 +277,6 @@ public class ProblemShooter {
         else {System.out.println("Wrong!"); sc.close(); return false; }
     }
     
-    public static String shootProb(Problem p) {
-        String result="";
-        int r = (int)(Math.random()*5);
-        ans.add(new Integer(r+1));
-        String [] outof = p.getOutOf(r);
-        //System.out.println(p);
-        result+=(p.getPassage()+"\n");
-        
-        for(int i=0; i<outof.length;i++) {
-            result+="("+(i+1)+") "+outof[i]+"\n";
-        }
-        
-        return result;
-    }
-    
     public static int evaluate(boolean[] turnIn) {
         int count = 0;
         int result;
@@ -298,4 +288,5 @@ public class ProblemShooter {
         
         return result;
     }
+    */
 }

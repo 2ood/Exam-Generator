@@ -17,6 +17,8 @@ public class ProblemShooter {
     static File dir;
     static String bankPath;
     static int [][] chapters;
+    static String [] bigIndexes;
+    static String [][] smallIndexes;
     
     public static void main (String [] args) {
         
@@ -116,15 +118,21 @@ public class ProblemShooter {
                 });
 
                 Arrays.sort(subDir);
-
+                
+                bigIndexes=subDir;
+                smallIndexes= new String[bigIndexes.length][];
                 chapters = new int[subDir.length][];
+                
                 for(int i=0;i<subDir.length;i++) {
                     File[] fileList =(new File(bankPath+"/"+subDir[i])).listFiles();
                     Arrays.sort(fileList);
-                    
+        
                     chapters[i]=new int[fileList.length];
+                    smallIndexes[i]= new String[fileList.length];
+                    
                     for(int j=0;j<fileList.length;j++) {
                         chapters[i][j] = util.overlookFile(fileList[j]);
+                        smallIndexes[i][j] = fileList[j].getName();
                     }
                 }
             }
@@ -147,7 +155,7 @@ public class ProblemShooter {
                 indexNum+=temp.length;
                 
                 for(int j=0; j<temp.length;j++) {
-                    smalls.add(new IterateIndex(i,j));
+                    smalls.add(new IterateIndex(bankPath,bigIndexes[i],smallIndexes[i][j]));
                 }
             }
             if(indexNum>=count) {
@@ -226,7 +234,7 @@ public class ProblemShooter {
         ArrayList<Problem> result= new ArrayList<Problem>();
         
         for (IterateIndex i : chosen) {
-            result.add(i.loadAnyProblem());
+            result.add(i.loadProblem(-1));
         }
         
         return result;

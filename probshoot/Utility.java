@@ -12,6 +12,22 @@ import java.io.*;
 public class Utility {
     public Utility() {}
     
+    public ArrayList<ConfigAttr> readConfigFile(File f) throws Exception {
+            ArrayList<ConfigAttr> result = new ArrayList<ConfigAttr>();
+            Scanner scan = new Scanner(f);
+             while(scan.hasNextLine()){
+                 String next = scan.nextLine();
+                 if(next.startsWith("#")) continue;
+                 else if(next.endsWith(":")){
+                     result.add(new ConfigAttr(next,scan.nextLine()));
+                 }
+                 else continue;
+             }
+        scan.close();
+        result.trimToSize();
+        return result;
+    }
+    
     public ArrayList<String> readFile(String filename) throws Exception {
             ArrayList<String> result = new ArrayList<String>();
             Scanner scan = new Scanner(new File(filename));

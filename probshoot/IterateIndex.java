@@ -51,10 +51,12 @@ public class IterateIndex implements Comparable<IterateIndex> {
             
 
         } catch (FileNotFoundException e1) {
-            e1.printStackTrace();
+            System.err.append("File not found error in method IterateIndex.loadProblem(int)"+"\n");
             result = new Problem();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.append("Unknown error in method printAnsTxt"+"\n");
+            System.err.append(e.getMessage()+"\n");
+            System.err.append("Contact developer.<kmchoi28@naver.com>"+"\n");
             result = new Problem();
         }
         

@@ -19,47 +19,65 @@ public class ProblemShooter {
     static int [][] chapters;
     static String [] bigIndexes;
     static String [][] smallIndexes;
+    static  FileWriter log;
+    static  FileWriter err;
+    static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MMddHHmm");  
+    static LocalDateTime now = LocalDateTime.now();
     
     public static void main (String [] args) {
         
         ArrayList <Problem> problems;
         ArrayList <IterateIndex> indexes;
+        try {
+            System.setOut(new PrintStream(new FileOutputStream("log.txt", true)));
+            System.setErr(new PrintStream(new FileOutputStream("error.txt", true)));
+        } catch(Exception e) {       
+            System.err.println("file output error");
+        }
+    
+        System.out.append("___________NEW RUN in "+dtf.format(now)+"___________"+"\n");
+        System.err.append("___________NEW RUN in "+dtf.format(now)+"___________"+"\n");
         
-        System.out.print("reading configuration ...");
+        System.out.append("reading configuration ...");
         readConfig();
-        System.out.println("done");
+        System.out.append("done"+"\n");
         
-        System.out.print("refreshing chapter file ...");
+
+        System.out.append("refreshing chapter data ...");
         refreshChapters();
-        System.out.println("done");
+        System.out.append("done"+"\n");
         
         try {
-            System.out.print("choosing Indexes ...");
+            System.out.append("choosing Indexes ...");
             indexes=chooseSmallIndex(number);
-            System.out.println("done");
+            System.out.append("done"+"\n");
         } catch (Exception e) {
-            System.out.println("so little bank");
-            System.out.println("Exiting program ...");
+            System.err.append("so little bank"+"\n");
+            System.out.append("so little bank"+"\n");
+            System.out.append("Exiting program ..."+"\n");
             return;
         }
         
-        System.out.print("reading each problems ...");
+        System.out.append("reading each problems ...");
         problems = readEachProblem(indexes);
-        System.out.println("done");
+        System.out.append("done"+"\n");
         
-        System.out.print("shuffling problems ...");
+        System.out.append("shuffling problems ...");
         Collections.shuffle(problems);
-        System.out.println("done");
+        System.out.append("done"+"\n");
         
         
-        System.out.print("exporting exam sheet ...");
+        System.out.append("exporting exam sheet ...");
         printToTxt(problems);
-        System.out.println("done");
+        System.out.append("done"+"\n");
         
         
-        System.out.print("exporting answer sheet ...");
+        System.out.append("exporting answer sheet ...");
         printAnsTxt();
-        System.out.println("All done");
+        System.out.append("All done"+"\n");
+        
+        System.out.append("___________NORMAL PROGRAM EXIT___________"+"\n");
+        System.err.append("NORMAL PROGRAM EXIT"+"\n");
         
         //turnIn = exam(problems);
         //score = evaluate(turnIn);
@@ -98,10 +116,24 @@ public class ProblemShooter {
     
     public static void readConfig() {
         try {
-            bankPath="PUT_YOUR_QUESTION_FILES_HERE";
-            number=10;
-            ans = new int[number];
-        } catch(Exception e) {}
+            ArrayList<ConfigAttr> conf = util.readConfigFile(new File("config.txt"));
+            
+            System.out.append("\n"+"\n******configuration********"+"\n");
+            for(ConfigAttr c : conf) {
+                System.out.append(c.toString()+"\n");
+                if(c.equals("Bank-Root:")){bankPath=c.getVar();}
+                else if(c.equals("How-Many-Questions(integer):")){number=Integer.parseInt(c.getVar());}
+                else continue;
+            }
+            System.out.append("***************************\n"+"\n");
+            
+            ans = new int[number];      
+            
+        } catch(Exception e) {
+            System.err.append("Unknown exception in method Problemshooter.readConfig"+"\n");
+            System.err.append(e.getMessage()+"\n");
+            System.err.append("Contact developer.<kmchoi28@naver.com>"+"\n");
+        }
         
     }
     
@@ -138,9 +170,11 @@ public class ProblemShooter {
             }
             
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            System.err.append("File not found error in method Problemshooter.refreshChapters"+"\n");
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.append("Unknown error in method Problemshooter.refreshChapters"+"\n");
+            System.err.append(e.getMessage()+"\n");
+            System.err.append("Contact developer.<kmchoi28@naver.com>"+"\n");
          }
         
     }
@@ -186,8 +220,6 @@ public class ProblemShooter {
     
     public static void printToTxt(ArrayList <Problem> problems) {
          try {
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MMddHHmm");  
-            LocalDateTime now = LocalDateTime.now(); 
             File file = new File(dtf.format(now)+"exam.txt");
             FileWriter fw = new FileWriter(file);
             int i=1;
@@ -202,16 +234,16 @@ public class ProblemShooter {
             fw.close();
              
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            System.err.append("File not found error in method Problemshooter.printToTxt"+"\n");
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.append("Unknown error in method Problemshooter.printToTxt"+"\n");
+            System.err.append(e.getMessage()+"\n");
+            System.err.append("Contact developer.<kmchoi28@naver.com>"+"\n");
          }
     }
     
     public static void printAnsTxt() {
          try {
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MMddHHmm");  
-            LocalDateTime now = LocalDateTime.now(); 
             File file = new File(dtf.format(now)+"answer.txt");
             FileWriter fw = new FileWriter(file);
             int i=1;
@@ -224,9 +256,11 @@ public class ProblemShooter {
             fw.close();
              
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            System.err.append("File not found error in method Problemshooter.printAnsTxt"+"\n");
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.append("Unknown error in method Problemshooter.printAnsTxt"+"\n");
+            System.err.append(e.getMessage()+"\n");
+            System.err.append("Contact developer.<kmchoi28@naver.com>"+"\n");
          }
     }
     

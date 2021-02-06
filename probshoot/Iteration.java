@@ -1,3 +1,12 @@
+package probshoot;
+
+/**
+* supportive class for project problemshooter.
+* This class is an object model of handling small indexes.
+* Deprecated class; this class is replaced by IterateIndex class.
+* @author Kyungmin Choi <kmchoi28@naver.com>
+**/
+
 import java.util.*;
 
 public class Iteration extends IterateIndex {

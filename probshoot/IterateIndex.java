@@ -31,6 +31,7 @@ public class IterateIndex implements Comparable<IterateIndex> {
     public boolean setSmall(String s) { smallIndex=s; return true;}
     
     
+    
     public Problem loadProblem (int index) {
         
         Problem result;

@@ -19,12 +19,11 @@ You can change the variables in your taste. The changes will be updated in the n
 
 * This file is crutial to this program, so you **SHOULD NEVER ERASE** it.
 
-* YOU **SHOULD NEVER ERASE** the '#' before the comments. 
+* YOU **SHOULD NEVER ERASE** the '#' before the annotations. 
 
 
 #### 3) question bank
 This directory is where you decided to put your question banks in. The path of the directory is stated in the **config.txt** file.
-
 
 ## 2. Needs to be filled beforehand : update question bank
 As described, this directory (hereafter referred to as root bank) is where you put your information of your qustion pool.
@@ -35,15 +34,26 @@ This program is designed for two-level-indexed problems. In the root bank, there
 
 * the files should only be **.scv files**.
 
-In each .csv files, the information of each problem is stored. There are 7 columns; problem number, problem question passage, the answer, and 4 different wrong choices.
+In each .csv files, the information of each problem is stored. 
 
-These files should be manually put.
+There are **7 columns**; 
+- problem number, 
+- problem question passage, 
+- the answer, 
+- and 4 different wrong choices.
+
+Unfortunately, these files should be manually put.
 
 ## 3. Let's generate exam sheet
-By now, you'ill have 3 things in your root directory; question bank, config file, and the generateExams.jar file.
+By now, you'll have 3 things in your root directory; question bank, config file, and the generateExams.jar file.
 
 All you need to do is, **double-click file generateExams.jar**. 
-If the bank is classified properly and if the config is plausible, two(or three) files should be made. One is the exam sheet, and the other is its answer sheet(One optional is chapters_DO_NOT_ERASE.txt file. This is a supportive file that shortens program running time.) 
+If the bank is classified properly and if the config is plausible, two(or four) files should be made. 
 
+One is the **exam sheet**, and the other is **its answer sheet**
 
+Optional two is log.txt file and error.txt file. This is a supportive file that shows how program is running. If the program is not working properly, you can go over these files and find the reason. If there's **unknown error** (in error file), feel free to contact the developer.  
+
+## 4. Frequently Occured Errors
+#### 1) Can't find bank
 

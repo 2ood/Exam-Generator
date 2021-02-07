@@ -12,7 +12,7 @@ import java.io.*;
 public class Utility {
     public Utility() {}
     
-    public ArrayList<ConfigAttr> readConfigFile(File f) throws Exception {
+    public ArrayList<ConfigAttr> readConfigFile(File f) throws FileNotFoundException, IOException {
             ArrayList<ConfigAttr> result = new ArrayList<ConfigAttr>();
             Scanner scan = new Scanner(f);
              while(scan.hasNextLine()){
@@ -28,7 +28,7 @@ public class Utility {
         return result;
     }
     
-    public ArrayList<String> readFile(String filename) throws Exception {
+    public ArrayList<String> readFile(String filename) throws FileNotFoundException, IOException {
             ArrayList<String> result = new ArrayList<String>();
             Scanner scan = new Scanner(new File(filename));
              while(scan.hasNextLine()){
@@ -38,7 +38,7 @@ public class Utility {
         return result;
     }
     
-    public ArrayList<String> readFile(File f) throws Exception {
+    public ArrayList<String> readFile(File f) throws FileNotFoundException, IOException {
             ArrayList<String> result = new ArrayList<String>();
             Scanner scan = new Scanner(f);
              while(scan.hasNextLine()){
@@ -49,7 +49,7 @@ public class Utility {
         return result;
     }
     
-    public int overlookFile(File f) throws Exception {
+    public int overlookFile(File f) throws FileNotFoundException, IOException {
             int result=0;
             Scanner scan = new Scanner(f);
              while(scan.hasNextLine()){

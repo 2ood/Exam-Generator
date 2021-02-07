@@ -36,12 +36,16 @@ public class IterateIndex implements Comparable<IterateIndex> {
         
         Problem result;
         ArrayList<String> wrong = new ArrayList<String>();
-        
+        String[] temp;
         try {
             ArrayList<String> f = util.readFile(filepath);
             if(index<=0) {index =(int)(Math.random()*f.size());}
-            String[] temp = f.get(index).split(",");
-
+            if(filepath.endsWith(".csv")) temp = f.get(index).split(",");
+            else if (filepath.endsWith(".xls")) temp = f.get(index).split("\t");
+            else if (filepath.endsWith(".xlsx")) temp = f.get(index).split("\t");
+            else if (filepath.endsWith(".xml")) temp = f.get(index).split("\t");
+            else  temp = f.get(index).split(",");
+            
             for(int i=3;i<temp.length;i++) {
                 wrong.add(temp[i]);
             }

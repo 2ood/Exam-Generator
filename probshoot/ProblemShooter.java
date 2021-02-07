@@ -23,61 +23,61 @@ public class ProblemShooter {
     static  FileWriter err;
     static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MMddHHmm");  
     static LocalDateTime now = LocalDateTime.now();
+    static ArrayList <Problem> problems = new ArrayList<Problem>();
+    static ArrayList <IterateIndex> indexes = new ArrayList<IterateIndex>();
     
     public static void main (String [] args) {
-        
-        ArrayList <Problem> problems;
-        ArrayList <IterateIndex> indexes;
         try {
-            System.setOut(new PrintStream(new FileOutputStream("log.txt", true)));
-            System.setErr(new PrintStream(new FileOutputStream("error.txt", true)));
-        } catch(Exception e) {       
-            System.err.println("file output error");
-        }
-    
-        System.out.append("___________NEW RUN in "+dtf.format(now)+"___________"+"\n");
-        System.err.append("___________NEW RUN in "+dtf.format(now)+"___________"+"\n");
-        
-        System.out.append("reading configuration ...");
-        readConfig();
-        System.out.append("done"+"\n");
-        
+            try {
+                System.setOut(new PrintStream(new FileOutputStream("log.txt", true)));
+                System.setErr(new PrintStream(new FileOutputStream("error.txt", true)));
+            } catch(Exception e) {       
+                System.err.println("file output error");
+                throw new Exception();
+            }
 
-        System.out.append("refreshing chapter data ...");
-        refreshChapters();
-        System.out.append("done"+"\n");
-        
-        try {
+            System.out.append("___________NEW RUN in "+dtf.format(now)+"___________"+"\n");
+            System.err.append("___________NEW RUN in "+dtf.format(now)+"___________"+"\n");
+
+            System.out.append("reading configuration ...");
+            readConfig();
+            System.out.append("done"+"\n");
+
+            System.out.append("refreshing chapter data ...");
+            refreshChapters();
+            System.out.append("done"+"\n");
+
             System.out.append("choosing Indexes ...");
             indexes=chooseSmallIndex(number);
             System.out.append("done"+"\n");
-        } catch (Exception e) {
-            System.err.append("so little bank"+"\n");
-            System.out.append("so little bank"+"\n");
-            System.out.append("Exiting program ..."+"\n");
-            return;
-        }
+
+
+            System.out.append("reading each problems ...");
+            problems = readEachProblem(indexes);
+            System.out.append("done"+"\n");
+
+
+            System.out.append("shuffling problems ...");
+            Collections.shuffle(problems);
+            System.out.append("done"+"\n");
+
+
+            System.out.append("exporting exam sheet ...");
+            printToTxt(problems);
+            System.out.append("done"+"\n");
+
+            System.out.append("exporting answer sheet ...");
+            printAnsTxt();
+            System.out.append("All done"+"\n");
         
-        System.out.append("reading each problems ...");
-        problems = readEachProblem(indexes);
-        System.out.append("done"+"\n");
-        
-        System.out.append("shuffling problems ...");
-        Collections.shuffle(problems);
-        System.out.append("done"+"\n");
-        
-        
-        System.out.append("exporting exam sheet ...");
-        printToTxt(problems);
-        System.out.append("done"+"\n");
-        
-        
-        System.out.append("exporting answer sheet ...");
-        printAnsTxt();
-        System.out.append("All done"+"\n");
         
         System.out.append("___________NORMAL PROGRAM EXIT___________"+"\n");
         System.err.append("NORMAL PROGRAM EXIT"+"\n");
+            
+        } catch (Exception e) {
+            System.err.append("\n"+"!!!!!!!!!!!PROGRAM HAD A PROBLEM!!!!!!!!!!!"+"\n");
+            System.out.append("\n"+"!!!!!!!!!!!PROGRAM HAD A PROBLEM!!!!!!!!!!!"+"\n");
+        }
         
         //turnIn = exam(problems);
         //score = evaluate(turnIn);
@@ -114,10 +114,10 @@ public class ProblemShooter {
     }
     */
     
-    public static void readConfig() {
+    public static void readConfig() throws Exception {
         try {
             ArrayList<ConfigAttr> conf = util.readConfigFile(new File("config.txt"));
-            
+
             System.out.append("\n"+"\n******configuration********"+"\n");
             for(ConfigAttr c : conf) {
                 System.out.append(c.toString()+"\n");
@@ -126,21 +126,24 @@ public class ProblemShooter {
                 else continue;
             }
             System.out.append("***************************\n"+"\n");
-            
-            ans = new int[number];      
-            
+
+            ans = new int[number]; 
+        } catch(FileNotFoundException f) {
+            System.err.append("file"+"\n");
+            System.out.append("so little bank"+"\n");
+            throw new Exception();
         } catch(Exception e) {
             System.err.append("Unknown exception in method Problemshooter.readConfig"+"\n");
             System.err.append(e.getMessage()+"\n");
             System.err.append("Contact developer.<kmchoi28@naver.com>"+"\n");
+            throw new Exception();
         }
-        
     }
     
-    public static void refreshChapters() {
+    public static void refreshChapters() throws Exception {
         try {
             File dir= new File(bankPath);
-            
+
             if(dir.isDirectory()) {
                 String[] subDir = dir.list(new FilenameFilter() {
                   @Override
@@ -148,38 +151,52 @@ public class ProblemShooter {
                     return new File(current, name).isDirectory();
                   }
                 });
+                if(subDir.length<=0) throw new BankTooSmallException();
 
                 Arrays.sort(subDir);
-                
+
                 bigIndexes=subDir;
                 smallIndexes= new String[bigIndexes.length][];
                 chapters = new int[subDir.length][];
                 
                 for(int i=0;i<subDir.length;i++) {
+                    
                     File[] fileList =(new File(bankPath+"/"+subDir[i])).listFiles();
+                    if(fileList.length<=0) throw new BankTooSmallException();
                     Arrays.sort(fileList);
-        
+
                     chapters[i]=new int[fileList.length];
                     smallIndexes[i]= new String[fileList.length];
-                    
+
                     for(int j=0;j<fileList.length;j++) {
                         chapters[i][j] = util.overlookFile(fileList[j]);
                         smallIndexes[i][j] = fileList[j].getName();
                     }
                 }
             }
-            
+            else throw new BankTooSmallException();
         } catch (FileNotFoundException e) {
             System.err.append("File not found error in method Problemshooter.refreshChapters"+"\n");
+            throw new Exception();
+        } catch (BankTooSmallException b) {
+            System.err.append("so little bank"+"\n");
+            System.out.append("so little bank"+"\n");
+            System.out.append("The bank path might not have been properly put. check config.txt"+"\n");
+            System.out.append("Or, the bank might not have nothing inside."+"\n");
+            System.err.append("The bank path might not have been properly put. check config.txt"+"\n");
+            System.err.append("Or, the bank might not have nothing inside."+"\n");
+            System.out.append("Exiting program ..."+"\n");
+            throw new Exception();
         } catch (Exception e) {
             System.err.append("Unknown error in method Problemshooter.refreshChapters"+"\n");
             System.err.append(e.getMessage()+"\n");
             System.err.append("Contact developer.<kmchoi28@naver.com>"+"\n");
-         }
-        
+            throw new Exception();
+        }
     }
     
     public static ArrayList<IterateIndex> chooseSmallIndex(int count) throws Exception { 
+        try {
         ArrayList<IterateIndex> result = new ArrayList<IterateIndex>(count);
         ArrayList<IterateIndex> smalls = new ArrayList<IterateIndex>();
         int indexNum=0;
@@ -197,10 +214,22 @@ public class ProblemShooter {
                      result.add(smalls.get(n.intValue()));            
                 }
             }
-            else throw new Exception();
+            else throw new BankTooSmallException();
         
         Collections.sort(result);
         return result;
+        } catch (BankTooSmallException b) {
+            System.err.append("so little bank"+"\n");
+            System.out.append("so little bank"+"\n");
+            System.out.append("Exiting program ..."+"\n");
+            throw new Exception();
+        } catch (Exception e) {
+            System.err.append("Unknown error in method Problemshooter.chooseSmallIndex"+"\n");
+            e.printStackTrace();
+            System.err.append(e.getMessage()+"\n");
+            System.err.append("Contact developer.<kmchoi28@naver.com>"+"\n");
+            throw new Exception();
+        }
     }
     
     public static ArrayList<Integer> chooseNumbers(int range, int count) {
@@ -218,8 +247,8 @@ public class ProblemShooter {
         return result;
     }
     
-    public static void printToTxt(ArrayList <Problem> problems) {
-         try {
+    public static void printToTxt(ArrayList <Problem> problems) throws Exception {
+       try {
             File file = new File(dtf.format(now)+"exam.txt");
             FileWriter fw = new FileWriter(file);
             int i=1;
@@ -232,18 +261,21 @@ public class ProblemShooter {
             }  
             
             fw.close();
-             
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException f) {
             System.err.append("File not found error in method Problemshooter.printToTxt"+"\n");
+            throw new Exception();
         } catch (Exception e) {
             System.err.append("Unknown error in method Problemshooter.printToTxt"+"\n");
             System.err.append(e.getMessage()+"\n");
             System.err.append("Contact developer.<kmchoi28@naver.com>"+"\n");
+            throw new Exception();
          }
+             
+        
     }
     
-    public static void printAnsTxt() {
-         try {
+    public static void printAnsTxt() throws Exception {
+        try {    
             File file = new File(dtf.format(now)+"answer.txt");
             FileWriter fw = new FileWriter(file);
             int i=1;
@@ -254,28 +286,39 @@ public class ProblemShooter {
             }  
             
             fw.close();
-             
-        } catch (FileNotFoundException e) {
+        
+        } catch (FileNotFoundException f) {
             System.err.append("File not found error in method Problemshooter.printAnsTxt"+"\n");
+            throw new Exception();
         } catch (Exception e) {
             System.err.append("Unknown error in method Problemshooter.printAnsTxt"+"\n");
             System.err.append(e.getMessage()+"\n");
             System.err.append("Contact developer.<kmchoi28@naver.com>"+"\n");
+            throw new Exception();
          }
     }
     
-    public static ArrayList<Problem> readEachProblem(ArrayList <IterateIndex> chosen) {
-        ArrayList<Problem> result= new ArrayList<Problem>();
-        
-        for (IterateIndex i : chosen) {
-            result.add(i.loadProblem(-1));
-        }
-        
-        return result;
+    public static ArrayList<Problem> readEachProblem(ArrayList <IterateIndex> chosen) throws Exception {
+        try {
+            ArrayList<Problem> result= new ArrayList<Problem>();
+
+            for (IterateIndex i : chosen) {
+                result.add(i.loadProblem(-1));
+            }
+
+            return result;
+        } catch (NullPointerException n) {
+            System.err.append("NullPointerException occured in ProblemShooter.readEachProblem(ArrayList<T>)"+"\n");
+            System.err.append("indexes might not have been initialized"+"\n");
+            throw new Exception();
+        } catch (Exception e) {
+            System.err.append("Unknown error in method ProblemShooter.readEachProblem(ArrayList<T>)"+"\n");
+            System.err.append(e.getMessage()+"\n");
+            System.err.append("Contact developer.<kmchoi28@naver.com>"+"\n");
+            throw new Exception();
+         }
     }
-    
-   
-    
+     
     public static String shootProb(Problem p, int j) {
         String result="";
         int r = (int)(Math.random()*5);

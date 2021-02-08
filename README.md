@@ -8,7 +8,8 @@ Idea credits to Corpral Cho.
 This program is a jar file, so it needs **java jre** installed in your local computer.
 
 following is the anchor to latest jre8.
-[java jre download](https://www.oracle.com/kr/java/technologies/javase-jre8-downloads.html)
+
+[java jre download (https://www.oracle.com/kr/java/technologies/javase-jre8-downloads.html)](https://www.oracle.com/kr/java/technologies/javase-jre8-downloads.html)
 
 #### 2) config.txt
 This text file stores the configuration attributes that can change the exported result files.
@@ -28,16 +29,17 @@ This directory is where you decided to put your question banks in. The path of t
 ## 2. Needs to be filled beforehand : update question bank
 As described, this directory (hereafter referred to as root bank) is where you put your information of your qustion pool.
 
-This program is designed for two-level-indexed problems. In the root bank, there are subdirectories representing each big indexes. Inside each big index subdirectories, there are .csv files for each small indexes. The files should be only .csv files (or .txt file split with commas[,]). 
+This program is designed for two-level-indexed problems. In the root bank, there are subdirectories representing each big indexes. Inside each big index subdirectories, there are .csv files for each small indexes. The files should be only .csv files (or .txt file split with commas[,]). You can find the method of saving Excel file into .csv file at 5.Appendix of this file.
 
 **WARNING**
 
-* the files should only be **.scv files**.
+* the files should only be **.csv files**.
+* the files content **SHOULD NEVER INCLUDE COMMA[,].**
 
 In each .csv files, the information of each problem is stored. 
 
 There are **7 columns**; 
-- problem number, 
+- problem number(assigned under each small index), 
 - problem question passage, 
 - the answer, 
 - and 4 different wrong choices.
@@ -56,4 +58,23 @@ Optional two is log.txt file and error.txt file. This is a supportive file that 
 
 ## 4. Frequently Occured Errors
 #### 1) Can't find bank
+ This error is caused when the bank path is not properly put. This error might also happen when the bank path found is a blank directory. Check the config.txt file and your bank path.
+ 
+#### 2) The program seems properly excecuted, but the exported content is somewhat cut.
+ This error is caused when the content is too small that the program had overlooked them. try putting more problems for each file.
+ 
+ This error might also happen when the content has the delimiter( for .csv files, it is COMMA[,]). The program reads the file and splits into cells by the delimiter COMMA[,]. Try not to use COMMA in your content.
+
+## 5. Appendix
+#### 1) How to convert Excel files to .csv files
+(1) In your Excel spreadsheet, click **File**.
+
+(2) Click **Save As**.
+
+(3) Click Browse to choose where you want to save your file.
+
+(4) Select **"CSV"** from the "Save as type" drop-down menu.
+
+(5) Click **Save.**
+
 

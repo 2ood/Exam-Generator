@@ -16,7 +16,8 @@ public class Problem {
     private String passage;
     private String right;
     private ArrayList<String> wrong;
-    
+    private int answer=-1;
+    private String resourcePath="";
     //constructors
     public Problem() {this(-1,"","",new ArrayList<String>());}
     public Problem(int n,String p, String r, ArrayList<String> w){
@@ -32,11 +33,15 @@ public class Problem {
     public ArrayList<String> getWrong() { return wrong;} 
     public String getWrong(int index) {return wrong.get(index);}
     public String getPassage() { return passage;}
+    public int getAnswer() {return answer;}
+    public String getResourcePath() {return resourcePath;}
     //setters
     public boolean setNum(int n) { num =n; return true;}
     public boolean setRight(String r) { right=r; return true;}
     public boolean setWrong(ArrayList<String> w) { wrong = w; return true;}
     public boolean setPassage(String p) { passage =p ; return true;}
+    public boolean setAnswer(int a) { answer=a; return true;}
+    public boolean setResourcePath(String p) { resourcePath=p; return true;}
     
     public String[] getOutOf(int r) {
         shuffleWrongs();

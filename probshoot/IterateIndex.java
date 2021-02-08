@@ -69,7 +69,7 @@ public class IterateIndex implements Comparable<IterateIndex> {
     
     
     public String toString() {
-        String tostring = "bigIndex : "+bigIndex+", smallIndex : "+smallIndex;
+        String tostring = ""+bigIndex+", "+smallIndex;
         return tostring;
     }
     

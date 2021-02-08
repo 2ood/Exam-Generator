@@ -13,7 +13,6 @@ import java.time.format.*;
 public class ProblemShooter {
     public static Utility util = new Utility();
     static int number;
-    static int[] ans;
     static File dir;
     static String bankPath;
     static int [][] chapters;
@@ -58,7 +57,7 @@ public class ProblemShooter {
 
 
             System.out.append("shuffling problems ...");
-            Collections.shuffle(problems);
+            //Collections.shuffle(problems);
             System.out.append("done"+"\n");
 
 
@@ -127,7 +126,6 @@ public class ProblemShooter {
             }
             System.out.append("***************************\n"+"\n");
 
-            ans = new int[number]; 
         } catch(FileNotFoundException f) {
             System.err.append("file"+"\n");
             System.out.append("so little bank"+"\n");
@@ -215,7 +213,7 @@ public class ProblemShooter {
                 }
             }
             else throw new BankTooSmallException();
-        
+        result.trimToSize();
         Collections.sort(result);
         return result;
         } catch (BankTooSmallException b) {
@@ -279,8 +277,9 @@ public class ProblemShooter {
             File file = new File(dtf.format(now)+"answer.txt");
             FileWriter fw = new FileWriter(file);
             int i=1;
-            for(int a : ans) {
-                fw.write(i+") "+a+"\n");
+     
+            for(Problem p : problems) {
+                fw.write(i+") "+p.getAnswer()+"\t\t (from "+p.getResourcePath()+") \n");
                 fw.flush();
                 i++;
             }  
@@ -301,9 +300,13 @@ public class ProblemShooter {
     public static ArrayList<Problem> readEachProblem(ArrayList <IterateIndex> chosen) throws Exception {
         try {
             ArrayList<Problem> result= new ArrayList<Problem>();
-
-            for (IterateIndex i : chosen) {
-                result.add(i.loadProblem(-1));
+            Problem newProb;
+            IterateIndex i;
+            for (int j=0;j<chosen.size();j++) {
+                i = chosen.get(j);
+                newProb = i.loadProblem(-1);
+                newProb.setResourcePath(i.toString());
+                result.add(newProb);
             }
 
             return result;
@@ -322,7 +325,7 @@ public class ProblemShooter {
     public static String shootProb(Problem p, int j) {
         String result="";
         int r = (int)(Math.random()*5);
-        ans[j]=(r+1);
+        p.setAnswer(r+1);
         String [] outof = p.getOutOf(r);
         //System.out.println(p);
         result+=(p.getPassage()+"\n");

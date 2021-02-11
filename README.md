@@ -9,7 +9,7 @@ This program is a jar file, so it needs **java jre** installed in your local com
 
 following is the anchor to latest jre8.
 
-[java jre download (https://www.oracle.com/kr/java/technologies/javase-jre8-downloads.html)](https://www.oracle.com/kr/java/technologies/javase-jre8-downloads.html)
+[java jre download (https://java.com/ko/download/ie_manual.jsp?locale=ko)](https://java.com/ko/download/ie_manual.jsp?locale=ko)
 
 #### 2) config.txt
 This text file stores the configuration attributes that can change the exported result files.
@@ -38,11 +38,11 @@ This program is designed for two-level-indexed problems. In the root bank, there
 
 In each .csv files, the information of each problem is stored. 
 
-There are **7 columns**; 
+There are **6(or more) columns**; 
 - problem number(assigned under each small index), 
 - problem question passage, 
 - the answer, 
-- and 4 different wrong choices.
+- and different wrong choices(the left columns).
 
 Unfortunately, these files should be manually put.
 

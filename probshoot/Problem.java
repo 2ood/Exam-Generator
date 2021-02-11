@@ -27,28 +27,11 @@ public class Problem {
         wrong       = w;
     }
     
-    //getters
-    public int getNum() {return num;}
-    public String getRight() { return right;}
-    public ArrayList<String> getWrong() { return wrong;} 
-    public String getWrong(int index) {return wrong.get(index);}
-    public String getPassage() { return passage;}
-    public int getAnswer() {return answer;}
-    public String getResourcePath() {return resourcePath;}
-    //setters
-    public boolean setNum(int n) { num =n; return true;}
-    public boolean setRight(String r) { right=r; return true;}
-    public boolean setWrong(ArrayList<String> w) { wrong = w; return true;}
-    public boolean setPassage(String p) { passage =p ; return true;}
-    public boolean setAnswer(int a) { answer=a; return true;}
-    public boolean setResourcePath(String p) { resourcePath=p; return true;}
-    
     public String[] getOutOf(int r) {
-        shuffleWrongs();
-        
-        String[] outof = new String[5];
+        String[] outof = new String[wrong.size()];
         int f=0;
         
+        shuffleWrongs();
         for(int i=0;i<outof.length;i++) {
             if(i==r) {outof[i]=right; f=1;}
             else outof[i]=wrong.get(i-f);
@@ -59,6 +42,23 @@ public class Problem {
     public void shuffleWrongs() {
         Collections.shuffle(wrong);
     }
+    
+    //getters
+    public int getNum() {return num;}
+    public String getRight() { return right;}
+    public ArrayList<String> getWrong() { return wrong;} 
+    public String getWrong(int index) {return wrong.get(index);}
+    public String getPassage() { return passage;}
+    public int getAnswer() {return answer;}
+    public String getResourcePath() {return resourcePath;}
+    
+    //setters
+    public boolean setNum(int n) { num =n; return true;}
+    public boolean setRight(String r) { right=r; return true;}
+    public boolean setWrong(ArrayList<String> w) { wrong = w; return true;}
+    public boolean setPassage(String p) { passage =p ; return true;}
+    public boolean setAnswer(int a) { answer=a; return true;}
+    public boolean setResourcePath(String p) { resourcePath=p; return true;}
     
     public String toString() { 
         String result=num+". "+passage+", right : "+right+", wrong : ";

@@ -1,7 +1,7 @@
 # 프로젝트 : generateExams.jar
-project **problemShooter*는 테스트 시험과 그 답안지를 생성하는 프로그램입니다.
+project **problemShooter**는 테스트 시험과 그 답안지를 생성하는 프로그램입니다.
 
-조 상병에게 이 아이디어를 제공하였습니다.
+조 상병에게 이 아이디어를 제공받았습니다.
 
 ## 1. 준비물
 ### 1) java jre
@@ -9,7 +9,7 @@ project **problemShooter*는 테스트 시험과 그 답안지를 생성하는 �
 
 다음은 최신 jre8를 다운받을 수 있는 링크입니다.
 
-[jre download (https://www.oracle.com/kr/java/technologies/javase-jre8-downloads.html)](https://www.oracle.com/kr/java/technologies/javase-jre8-downloads.html))
+[jre download (https://java.com/ko/download/ie_manual.jsp?locale=ko)](https://java.com/ko/download/ie_manual.jsp?locale=ko))
 
 ###2) Config.txt
 이 텍스트 파일에는 내보낸 결과 파일을 변경할 수 있는 설정값들이 저장됩니다.
@@ -33,16 +33,16 @@ project **problemShooter*는 테스트 시험과 그 답안지를 생성하는 �
 
 **경고**
 
-* 파일은 **.csv 파일*만 사용해야 합니다.
-* 파일 내용에 ** 쉼표[,]를 포함하지 마십시오.**
+* 파일은 **.csv 파일**만 사용해야 합니다.
+* 파일 내용에 **쉼표[,]를 포함하지 마십시오.**
 
 각 .csv 파일에는 각 문제의 정보가 저장됩니다.
 
-**각 파일에는 7개의 열이 있습니다*;
+**각 파일에는 7(이상도 가능) 개의 열이 있습니다**;
 - 문제 번호(각 소지수 기준),
 - 문제 지문,
 - 정답,
-- 그리고 4가지 잘못된 선택지.
+- 그리고 4가지 잘못된 선택지(나머지 열들. 열이 7개 이상일 경우 남는 것 모두 잘못된 선택지라고 생각한다).
 
 안타깝게도 이 파일들은 일일이 넣어야 합니다.
 

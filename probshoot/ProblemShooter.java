@@ -28,6 +28,7 @@ public class ProblemShooter {
     public static void main (String [] args) {
         try {
             try {
+                System.setProperty("file.encoding","UTF-8");
                 System.setOut(new PrintStream(new FileOutputStream("log.txt", true)));
                 System.setErr(new PrintStream(new FileOutputStream("error.txt", true)));
             } catch(Exception e) {       
@@ -248,7 +249,7 @@ public class ProblemShooter {
     public static void printToTxt(ArrayList <Problem> problems) throws Exception {
        try {
             File file = new File(dtf.format(now)+"exam.txt");
-            FileWriter fw = new FileWriter(file);
+            OutputStreamWriter fw = new OutputStreamWriter(new FileOutputStream(file),"utf-8");
             int i=1;
             for(Problem p : problems) {
                 fw.write(i+". ");
@@ -275,7 +276,7 @@ public class ProblemShooter {
     public static void printAnsTxt() throws Exception {
         try {    
             File file = new File(dtf.format(now)+"answer.txt");
-            FileWriter fw = new FileWriter(file);
+            OutputStreamWriter fw = new OutputStreamWriter(new FileOutputStream(file),"utf-8");
             int i=1;
      
             for(Problem p : problems) {

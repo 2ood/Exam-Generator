@@ -23,15 +23,6 @@ public class IterateIndex implements Comparable<IterateIndex> {
         filepath =root+"/"+bigIndex+"/"+smallIndex;
     }
     
-    
-    public String getBigIndex() {return bigIndex;}
-    public String getSmallIndex() {return smallIndex;}
-    
-    public boolean setBig(String b) { bigIndex=b; return true;}
-    public boolean setSmall(String s) { smallIndex=s; return true;}
-    
-    
-    
     public Problem loadProblem (int index) {
         
         Problem result;
@@ -72,6 +63,15 @@ public class IterateIndex implements Comparable<IterateIndex> {
         String tostring = ""+bigIndex+", "+smallIndex;
         return tostring;
     }
+    
+    //getters
+    public String getBigIndex() {return bigIndex;}
+    public String getSmallIndex() {return smallIndex;}
+    
+    //setters
+    public boolean setBig(String b) { bigIndex=b; return true;}
+    public boolean setSmall(String s) { smallIndex=s; return true;}
+    
     
     public int compareTo(IterateIndex target) {
         int result;

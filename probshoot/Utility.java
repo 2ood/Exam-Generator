@@ -14,7 +14,7 @@ public class Utility {
     
     public ArrayList<ConfigAttr> readConfigFile(File f) throws FileNotFoundException, IOException {
             ArrayList<ConfigAttr> result = new ArrayList<ConfigAttr>();
-            Scanner scan = new Scanner(f);
+            Scanner scan = new Scanner(f,"utf-8");
              while(scan.hasNextLine()){
                  String next = scan.nextLine();
                  if(next.startsWith("#")) continue;
@@ -30,7 +30,7 @@ public class Utility {
     
     public ArrayList<String> readFile(String filename) throws FileNotFoundException, IOException {
             ArrayList<String> result = new ArrayList<String>();
-            Scanner scan = new Scanner(new File(filename));
+            Scanner scan = new Scanner(new File(filename),"utf-8");
              while(scan.hasNextLine()){
                  result.add(scan.nextLine());
              }
@@ -40,7 +40,7 @@ public class Utility {
     
     public ArrayList<String> readFile(File f) throws FileNotFoundException, IOException {
             ArrayList<String> result = new ArrayList<String>();
-            Scanner scan = new Scanner(f);
+            Scanner scan = new Scanner(f,"utf-8");
              while(scan.hasNextLine()){
                  result.add(scan.nextLine());
              }
@@ -51,7 +51,7 @@ public class Utility {
     
     public int overlookFile(File f) throws FileNotFoundException, IOException {
             int result=0;
-            Scanner scan = new Scanner(f);
+            Scanner scan = new Scanner(f,"utf-8");
              while(scan.hasNextLine()){
                  result++;
                  scan.nextLine();

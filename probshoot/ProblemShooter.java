@@ -325,7 +325,7 @@ public class ProblemShooter {
      
     public static String shootProb(Problem p, int j) {
         String result="";
-        int r = (int)(Math.random()*5);
+        int r = (int)(Math.random()*(p.getWrong().size()+1));
         p.setAnswer(r+1);
         String [] outof = p.getOutOf(r);
         //System.out.println(p);

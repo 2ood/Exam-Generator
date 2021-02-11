@@ -29,6 +29,9 @@ This directory is where you decided to put your question banks in. The path of t
 ## 2. Needs to be filled beforehand : update question bank
 As described, this directory (hereafter referred to as root bank) is where you put your information of your qustion pool.
 
+Initially, the directory contains several sample directories and files. You should erase and replace all of them.
+
+
 This program is designed for two-level-indexed problems. In the root bank, there are subdirectories representing each big indexes. Inside each big index subdirectories, there are .csv files for each small indexes. The files should be only .csv files (or .txt file split with commas[,]). You can find the method of saving Excel file into .csv file at 5.Appendix of this file.
 
 **WARNING**

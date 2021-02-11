@@ -58,7 +58,7 @@ public class ProblemShooter {
 
 
             System.out.append("shuffling problems ...");
-            //Collections.shuffle(problems);
+            Collections.shuffle(problems);
             System.out.append("done"+"\n");
 
 
@@ -94,7 +94,7 @@ public class ProblemShooter {
         for(Problem p : problems) {
             System.out.println((flag++)+")"+p.toString());
         }
-        */
+        //*/
         
     }
     /*
@@ -151,7 +151,7 @@ public class ProblemShooter {
                   }
                 });
                 if(subDir.length<=0) throw new BankTooSmallException();
-
+                
                 Arrays.sort(subDir);
 
                 bigIndexes=subDir;

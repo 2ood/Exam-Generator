@@ -25,10 +25,12 @@ public class Problem {
         passage     = p;
         right       = r;
         wrong       = w;
+        wrong.trimToSize();
     }
     
     public String[] getOutOf(int r) {
-        String[] outof = new String[wrong.size()];
+        wrong.trimToSize();
+        String[] outof = new String[wrong.size()+1];
         int f=0;
         
         shuffleWrongs();

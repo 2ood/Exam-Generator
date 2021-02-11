@@ -20,7 +20,8 @@ public class IterateIndex implements Comparable<IterateIndex> {
     public IterateIndex(String root, String b, String s) {
         bigIndex =b;
         smallIndex = s;
-        filepath =root+"/"+bigIndex+"/"+smallIndex;
+        String strFileName =root+"/"+bigIndex+"/"+smallIndex; 
+        filepath =strFileName;
     }
     
     public Problem loadProblem (int index) {
@@ -30,6 +31,7 @@ public class IterateIndex implements Comparable<IterateIndex> {
         String[] temp;
         try {
             ArrayList<String> f = util.readFile(filepath);
+        
             if(index<=0) {index =(int)(Math.random()*f.size());}
             if(filepath.endsWith(".csv")) temp = f.get(index).split(",");
             else if (filepath.endsWith(".xls")) temp = f.get(index).split("\t");
@@ -38,6 +40,7 @@ public class IterateIndex implements Comparable<IterateIndex> {
             else  temp = f.get(index).split(",");
             
             for(int i=3;i<temp.length;i++) {
+                
                 wrong.add(temp[i]);
             }
             wrong.trimToSize();
@@ -49,8 +52,9 @@ public class IterateIndex implements Comparable<IterateIndex> {
             System.err.append("File not found error in method IterateIndex.loadProblem(int)"+"\n");
             result = new Problem();
         } catch (Exception e) {
-            System.err.append("Unknown error in method printAnsTxt"+"\n");
+            System.err.append("Unknown error in method IterateIndex.loadProblem(int)"+"\n");
             System.err.append(e.getMessage()+"\n");
+            e.printStackTrace();
             System.err.append("Contact developer.<kmchoi28@naver.com>"+"\n");
             result = new Problem();
         }

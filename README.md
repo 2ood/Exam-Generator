@@ -1,5 +1,5 @@
 # Project : problemShooter.jar
-project **Problemshooter** is a program that generates a test exam and its answer sheet.
+project **exam generator** is a program that generates a test exam and its answer sheet.
 
 Idea credits to Corpral Cho.
 
